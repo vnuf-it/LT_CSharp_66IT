@@ -30,6 +30,12 @@ namespace LT_Csharp_Practice02
         string color = "red";
         public string Color { get => color; set => color = value; }
 
+        public NguoiDung(string _hodem, string _ten)
+        {
+            this.hodem = _hodem;
+            this.ten = _ten;
+        }
+
         public NguoiDung(string _hodem, string _ten, int _tuoi)
         {
             this.hodem = _hodem;

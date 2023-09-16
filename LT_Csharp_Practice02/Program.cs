@@ -12,15 +12,14 @@ for (int i = 0; i < lines; i++)
     SinhVien sinhvien = new SinhVien(
         arr_thongtin[0].TrimStart().TrimEnd(), // Ho dem
         arr_thongtin[1].TrimStart().TrimEnd(), // Ten
-        int.Parse(arr_thongtin[2].TrimStart().TrimEnd()), // Tuoi
-        Convert.ToDouble(arr_thongtin[3].TrimStart().TrimEnd()), // DiemTB
-        Convert.ToDouble(arr_thongtin[4].TrimStart().TrimEnd())  // DiemRL
+        Convert.ToDouble(arr_thongtin[2].TrimStart().TrimEnd()), // DiemTB
+        Convert.ToDouble(arr_thongtin[3].TrimStart().TrimEnd())  // DiemRL
         );
 
     ds_sinhvien.Add(sinhvien);
 }
 
-Core.GetSvDuocXetHocBong(ds_sinhvien);
+SinhVien.GetSvDuocXetHocBong(ds_sinhvien);
 Console.ReadKey();
 
 //ds_sinhvien.OrderBy(ng => ng.Ten)
