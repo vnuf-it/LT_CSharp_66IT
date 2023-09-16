@@ -29,10 +29,20 @@ namespace LT_Csharp_Practice02
         {
         }
 
+        public SinhVien(string _hodem, string _ten, int _tuoi, string _dienthoai) : base(_hodem, _ten, _tuoi, _dienthoai)
+        {
+        }
+
         public SinhVien(string _hodem, string _ten, double _diemtb, double _diemrl): base(_hodem, _ten)
         {
             this.diemtb = _diemtb;
             this.diemrl = _diemrl;
+        }
+
+        public override void InThongTinLienHe()
+        {
+            var thongtin = $"Ho Ten SV: {this.Hodem} {this.Ten} \t\t\t| Tuoi: {base.Tuoi} \t| DT: {base.Dienthoai}";
+            Console.WriteLine(thongtin);
         }
 
         public override string GetThongTin()
