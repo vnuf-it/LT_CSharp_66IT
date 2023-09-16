@@ -16,6 +16,8 @@ namespace LT_Csharp_Practice02
         decimal dienthoai;
         int tuoi;
 
+
+
         public decimal Cccd { get => cccd; set => cccd = value; }
         public string Hodem { get => hodem; set => hodem = value; }
         public string Ten { get => ten; set => ten = value; }
@@ -23,6 +25,10 @@ namespace LT_Csharp_Practice02
         public string Email { get => email; set => email = value; }
         public decimal Dienthoai { get => dienthoai; set => dienthoai = value; }
         public int Tuoi { get => tuoi; set => tuoi = value; }
+
+        // Test từ khóa base
+        string color = "red";
+        public string Color { get => color; set => color = value; }
 
         public NguoiDung(string _hodem, string _ten, int _tuoi)
         {
