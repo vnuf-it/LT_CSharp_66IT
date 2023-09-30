@@ -41,6 +41,5 @@
 
         public abstract string GetHoVaTen();
 
-
     }
 }
