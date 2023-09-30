@@ -1,4 +1,6 @@
-﻿namespace Core_WebAPI.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Core_WebAPI.Models
 {
     public class Student : People
     {
@@ -10,28 +12,31 @@
         public string Lop { get => lop; set => lop = value; }
         public string Khoavien { get => khoavien; set => khoavien = value; }
 
-        public Student(string _hodem, string _ten) : base(_hodem, _ten)
+        public Student()
         {
         }
 
-        public Student(string _msv, string _lop, string _khoavien, string _cccd, string _hodem, string _ten) : base(_cccd, _hodem, _ten)
+        public Student(
+            string _msv, string _lop, string _khoavien,
+            string _cccd, string _hodem, string _ten, string _bietdanh, string _email, string _dienthoai, int _tuoi) : base(_cccd, _hodem, _ten, _bietdanh, _email, _dienthoai, _tuoi)
         {
             this.Msv = _msv;
             this.Lop = _lop;
             this.Khoavien = _khoavien;
+            this.Cccd = _cccd;
+            this.Hodem = _hodem;
+            this.Ten = _ten;
+            this.Bietdanh = _bietdanh;
+            this.Email = _email;
+            this.Dienthoai = _dienthoai;
+            this.Tuoi = _tuoi;
         }
 
-        public Student(string _hodem, string _ten, int _tuoi) : base(_hodem, _ten, _tuoi)
-        {
-        }
 
-        public Student(string _hodem, string _ten, string _dienthoai, string _email) : base(_hodem, _ten, _dienthoai, _email)
-        {
-        }     
 
-        public override string GetHoVaTen()
+        public override string GetInfo()
         {
-            return $"{Hodem} {Ten}";
+            return $"{Msv} - {Hodem} {Ten}";
         }
     }
 }

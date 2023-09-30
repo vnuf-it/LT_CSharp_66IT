@@ -18,34 +18,26 @@
         public string Dienthoai { get => dienthoai; set => dienthoai = value; }
         public int Tuoi { get => tuoi; set => tuoi = value; }
 
-        public People(string _hodem, string _ten)
+        public string Hovaten { get => $"{hodem} {ten}"; }
+
+
+
+        public People()
         {
-            this.Hodem = _hodem;
-            this.Ten = _ten;
         }
 
-        public People(string _cccd, string _hodem, string _ten)
+        public People(string _cccd, string _hodem, string _ten, string _bietdanh, string _email, string _dienthoai, int _tuoi)
         {
             this.Cccd = _cccd;
             this.Hodem = _hodem;
             this.Ten = _ten;
-        }
-        public People(string _hodem, string _ten, int _tuoi)
-        {
-            this.Hodem = _hodem;
-            this.Ten = _ten;
+            this.Bietdanh = _bietdanh;
+            this.Email = _email;
+            this.Dienthoai = _dienthoai;
             this.Tuoi = _tuoi;
         }
 
-        public People(string _hodem, string _ten, string _dienthoai, string _email)
-        {
-            this.Hodem = _hodem;
-            this.Ten = _ten;
-            this.Dienthoai = _dienthoai;
-            this.Email = _email;
-        }
-
-        public abstract string GetHoVaTen();
+        public abstract string GetInfo();
 
     }
 }
