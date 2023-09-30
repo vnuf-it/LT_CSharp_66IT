@@ -17,8 +17,6 @@ namespace LT_Csharp_Practice02
         string dienthoai;
         int tuoi;
 
-
-
         public decimal Cccd { get => cccd; set => cccd = value; }
         public string Hodem { get => hodem; set => hodem = value; }
         public string Ten { get => ten; set => ten = value; }
