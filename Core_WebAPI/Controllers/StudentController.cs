@@ -1,6 +1,7 @@
 ﻿using Core_WebAPI.Models;
 using Core_WebAPI.TestUnit;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.Metrics;
 using System.Net;
 using System.Xml.Linq;
 
@@ -13,18 +14,59 @@ namespace Core_WebAPI.Controllers
     public class StudentController : ControllerBase
     {
         // Định nghĩa ra biến danh sách sinh viên; Để lưu sinh viên khi được add thêm mới
-        static List<Student> ds_sinhvien2 = new List<Student>();
+        public static List<Student> ds_sinhvien = new List<Student>()
+            {
+                new Student()
+                {
+                    Msv         = "221070001"   ,
+                    Lop         = "66-HTTT"     ,
+                    Khoavien    = "Khoa CĐCT"   ,
+                    Cccd        = "0011234534"  ,
+                    Hodem       = "Nguyễn Văn"  ,
+                    Ten         = "ABC"      ,
+                    Bietdanh    = "ABC"      ,
+                    Email       = "abc@demo.com",
+                    Dienthoai   = "0979xxxx222" ,
+                    Tuoi        = 0
+                },
+                new Student()
+                {
+                    Msv         = "221070002"   ,
+                    Lop         = "66-HTTT"     ,
+                    Khoavien    = "Khoa CĐCT"   ,
+                    Cccd        = "0011234534"  ,
+                    Hodem       = "Trần Văn"  ,
+                    Ten         = "XYZ"      ,
+                    Bietdanh    = "XYZ"      ,
+                    Email       = "abc@demo.com",
+                    Dienthoai   = "0979xxxx242" ,
+                    Tuoi        = 0
+                },
+                new Student()
+                {
+                    Msv         = "221070003"   ,
+                    Lop         = "66-HTTT"     ,
+                    Khoavien    = "Khoa CĐCT"   ,
+                    Cccd        = "0011234534"  ,
+                    Hodem       = "Lê Thị"  ,
+                    Ten         = "AAA"      ,
+                    Bietdanh    = "AAA"      ,
+                    Email       = "aaa@demo.com",
+                    Dienthoai   = "0979xxxx223" ,
+                    Tuoi        = 0
+                }
+            };
 
         public static Student GetStudentByMsv(string msv)
         {
-            //return ds_sinhvien2.Find(i => i.Msv == msv);
-            return ds_sinhvien2.Where(i => i.Msv.ToLower().Contains(msv.ToLower())).First();
+            //return ds_sinhvien.Find(i => i.Msv == msv);
+            return ds_sinhvien.Where(i => i.Msv.ToLower().Contains(msv.ToLower())).First();
         }
 
         public static Student GetStudentByEmail(string email)
         {
-            //return ds_sinhvien2.Find(i => i.Msv == msv);
-            return ds_sinhvien2.Where(i => i.Email.ToLower().Contains(email.ToLower())).First();
+            //return ds_sinhvien.Find(i => i.Msv == msv);
+            return ds_sinhvien.Where(i => i.Email.ToLower().Contains(email.ToLower())).First();
         }
 
         // GET: api/<StudentController>
@@ -32,56 +74,56 @@ namespace Core_WebAPI.Controllers
         public IEnumerable<Student> Get()
         {
             // Trả về kết quả cho giao diện API
-            return ds_sinhvien2.OrderByDescending(i => i.Ten).AsEnumerable();
+            return ds_sinhvien.OrderByDescending(i => i.Msv).AsEnumerable();
         }
 
         // GET api/<StudentController>/221070001
         [HttpGet("{msv}")]
         public Student Get(string msv)
         {
-            return ds_sinhvien2.FirstOrDefault(i => i.Msv == msv);
+            return ds_sinhvien.FirstOrDefault(i => i.Msv == msv);
         }
 
         // GET api/<StudentController>/search/keyword
         [HttpGet("search/{keyword}")]
         public IEnumerable<Student> Search(string keyword)
         {
-            return ds_sinhvien2.Where(i => i.Ten.ToLower().Contains(keyword.ToLower()));
+            return ds_sinhvien.Where(i => i.Ten.ToLower().Contains(keyword.ToLower()));
+        }
+
+        // POST api/<StudentController>
+        [HttpPost]
+        public IActionResult Post([FromForm] Student sv)
+        {
+            try
+            {
+                ds_sinhvien.Add(sv);
+                return Ok(ds_sinhvien);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
         }
 
         //// POST api/<StudentController>
         //[HttpPost]
-        //public IActionResult Post([FromBody] Student sinhvien)
+        //public HttpResponseMessage Post([FromBody] Student sv)
         //{
         //    try
         //    {
-        //        ds_sinhvien2.Add(sinhvien);
-        //        return Ok(ds_sinhvien2);
+        //        ds_sinhvien.Add(sv);
+        //        return new HttpResponseMessage(HttpStatusCode.OK);
         //    }
         //    catch (Exception ex)
         //    {
-        //        return Content(ex.ToString());
+        //        return new HttpResponseMessage(HttpStatusCode.BadRequest);
         //    }
         //}
 
-        // POST api/<StudentController>
-        [HttpPost]
-        public HttpResponseMessage Post([FromBody] Student sv)
-        {
-            try
-            {
-                ds_sinhvien2.Add(sv);
-                return new HttpResponseMessage(HttpStatusCode.OK);
-            }
-            catch (Exception ex)
-            {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
-            }
-        }
-
         // PUT api/<StudentController>/5
         [HttpPut("{msv}")]
-        public IActionResult Put(string msv, [FromBody] Student sv)
+        public IActionResult Put(string msv, [FromForm] Student sv)
         {
             // PUT là dể update: Khi sử dụng phải gửi 1 bản ghi đầy đủ các trường thông tin để yêu cầu cập nhật.
             // Lưu ý: Nếu các trường thông tin khác để trống --> khi cập nhật sẽ xóa (bỏ trống hoặc chứa giá trị null)
@@ -95,11 +137,11 @@ namespace Core_WebAPI.Controllers
                 var sv_new = sv;
 
                 // B2: Cập nhật các trường thông tin
-                ds_sinhvien2.Remove(sv_old);
-                ds_sinhvien2.Add(sv_new);
+                ds_sinhvien.Remove(sv_old);
+                ds_sinhvien.Add(sv_new);
 
                 // B3: Thông báo kết quả
-                return Ok(ds_sinhvien2);
+                return Ok(ds_sinhvien);
             }
             catch (Exception ex)
             {
@@ -122,11 +164,9 @@ namespace Core_WebAPI.Controllers
                 var sv_new = sv;
 
                 // B2: Cập nhật các trường thông tin
-                ds_sinhvien2.Remove(sv_old);
-                ds_sinhvien2.Add(sv_new);
 
                 // B3: Thông báo kết quả
-                return Ok(ds_sinhvien2);
+                return Ok(ds_sinhvien);
             }
             catch (Exception ex)
             {
@@ -135,9 +175,40 @@ namespace Core_WebAPI.Controllers
         }
 
         // DELETE api/<StudentController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{msv}")]
+        public IActionResult DeleteByMsv(string msv)
         {
+            try
+            {
+                var sv_del = StudentController.GetStudentByMsv(msv);
+                // B1: Kiểm tra sự tồn tài của đối tượng theo id
+                if (sv_del != null)
+                {
+                    ds_sinhvien.Remove(sv_del);
+                    return Ok(ds_sinhvien);
+                }         
+                else
+                    return BadRequest("Msg: Mã sinh viên không tồn tại");
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+        }
+
+        // DELETE api/<StudentController>/all
+        [HttpDelete()]
+        public HttpResponseMessage DeleteAll()
+        {
+            try
+            {
+                ds_sinhvien .Clear();
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
         }
     }
 }

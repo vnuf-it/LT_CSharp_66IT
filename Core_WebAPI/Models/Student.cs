@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Authentication;
+using System.ComponentModel.DataAnnotations;
 
 namespace Core_WebAPI.Models
 {
@@ -32,7 +33,22 @@ namespace Core_WebAPI.Models
             this.Tuoi = _tuoi;
         }
 
+        static List<Student> ds_sinhvien = new List<Student>
+            {
+                 new Student{
+                          Msv         = "221070002"   ,
+                          Lop         = "66-HTTT"     ,
+                          Khoavien    = "Khoa CĐCT"   ,
+                          Cccd        = "0011234534"  ,
+                          Hodem       = "Nguyễn Văn"  ,
+                          Ten         = "ABCXYZ"      ,
+                          Bietdanh    = "ABCXYZ"      ,
+                          Email       = "abc@demo.com",
+                          Dienthoai   = "0979xxxx222" ,
+                          Tuoi        = 0
+                     },
 
+            };
 
         public override string GetInfo()
         {
