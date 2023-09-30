@@ -24,6 +24,12 @@
             this.Ten = _ten;
         }
 
+        public People(string _cccd, string _hodem, string _ten)
+        {
+            this.Cccd = _cccd;
+            this.Hodem = _hodem;
+            this.Ten = _ten;
+        }
         public People(string _hodem, string _ten, int _tuoi)
         {
             this.Hodem = _hodem;
