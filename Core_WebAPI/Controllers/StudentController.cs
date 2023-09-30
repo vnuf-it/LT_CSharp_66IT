@@ -15,6 +15,18 @@ namespace Core_WebAPI.Controllers
         // Định nghĩa ra biến danh sách sinh viên; Để lưu sinh viên khi được add thêm mới
         static List<Student> ds_sinhvien2 = new List<Student>();
 
+        public static Student GetStudentByMsv(string msv)
+        {
+            //return ds_sinhvien2.Find(i => i.Msv == msv);
+            return ds_sinhvien2.Where(i => i.Msv.ToLower().Contains(msv.ToLower())).First();
+        }
+
+        public static Student GetStudentByEmail(string email)
+        {
+            //return ds_sinhvien2.Find(i => i.Msv == msv);
+            return ds_sinhvien2.Where(i => i.Email.ToLower().Contains(email.ToLower())).First();
+        }
+
         // GET: api/<StudentController>
         [HttpGet]
         public IEnumerable<Student> Get()
@@ -54,11 +66,11 @@ namespace Core_WebAPI.Controllers
 
         // POST api/<StudentController>
         [HttpPost]
-        public HttpResponseMessage Post([FromBody] Student sinhvien)
+        public HttpResponseMessage Post([FromBody] Student sv)
         {
             try
             {
-                ds_sinhvien2.Add(sinhvien);
+                ds_sinhvien2.Add(sv);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception ex)
@@ -68,9 +80,58 @@ namespace Core_WebAPI.Controllers
         }
 
         // PUT api/<StudentController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{msv}")]
+        public IActionResult Put(string msv, [FromBody] Student sv)
         {
+            // PUT là dể update: Khi sử dụng phải gửi 1 bản ghi đầy đủ các trường thông tin để yêu cầu cập nhật.
+            // Lưu ý: Nếu các trường thông tin khác để trống --> khi cập nhật sẽ xóa (bỏ trống hoặc chứa giá trị null)
+            try
+            {
+                // B1: Kiểm tra sự tồn tài của đối tượng theo id
+                if (msv != sv.Msv)
+                    return BadRequest("Msg: Mã sinh viên không tồn tại");
+
+                var sv_old = StudentController.GetStudentByMsv(msv);
+                var sv_new = sv;
+
+                // B2: Cập nhật các trường thông tin
+                ds_sinhvien2.Remove(sv_old);
+                ds_sinhvien2.Add(sv_new);
+
+                // B3: Thông báo kết quả
+                return Ok(ds_sinhvien2);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+        }
+
+
+        // PATCH api/<StudentController>/5
+        [HttpPatch("{msv}")]
+        public IActionResult Patch(string msv, [FromBody] Student sv)
+        {
+            try
+            {
+                // B1: Kiểm tra sự tồn tài của đối tượng theo id
+                if (msv != sv.Msv)
+                    return BadRequest("Msg: Mã sinh viên không tồn tại");
+
+                var sv_old = StudentController.GetStudentByMsv(msv);
+                var sv_new = sv;
+
+                // B2: Cập nhật các trường thông tin
+                ds_sinhvien2.Remove(sv_old);
+                ds_sinhvien2.Add(sv_new);
+
+                // B3: Thông báo kết quả
+                return Ok(ds_sinhvien2);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
         }
 
         // DELETE api/<StudentController>/5

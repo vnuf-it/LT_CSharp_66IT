@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace Core_WebAPI.Controllers
 {
     //[Route("api/[controller]")]
-    [Route("api/san-pham")]
-    [ApiController]
+    //[Route("api/san-pham")]
+    //[ApiController]
     public class ProductController : ControllerBase
     {
         // Ref: https://www.c-sharpcorner.com/UploadFile/mahesh/insert-item-into-a-C-Sharp-list/
