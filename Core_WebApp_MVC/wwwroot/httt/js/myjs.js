@@ -1,9 +1,11 @@
 ﻿const url = "http://localhost:63223/api/Student";
+let test;
 
 // Cach 1:
 async function getapi(url) {
     const tmp = await fetch(url,);
     var data = await tmp.json();
+    test = data;
     console.log(data);
     show_table(data);
 }
@@ -41,7 +43,7 @@ function show_table(arrs) {
     //    </tr>`;
 
     arrs.forEach(function show(p) {
-        tb_row += `<tr>
+        tb_row += `<tr class="httt_row");>
         <td>${p.msv} </td>
         <td>${p.lop}</td>
         <td>${p.khoavien}</td>
@@ -55,8 +57,11 @@ function show_table(arrs) {
     document.getElementById("dsSinhVien").innerHTML = tb_row;
 }
 
-function clear_table() {
-    var clear = document.getElementById("dsSinhVien");
-    clear.remove();
+function clear_all() {
+    document.querySelectorAll(".httt_row").forEach(el => el.remove());
+}
+
+function show_all() {
+    show_table(test);
 }
 
