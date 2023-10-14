@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Core_WebAPI_EF_SQLite
+/Core_WebApp_MVC/wwwroot/httt/js/myjs.js
