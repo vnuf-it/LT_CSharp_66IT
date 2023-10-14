@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Demo CRUD";
+}
+
+
+@section mycss{
+    <link href="~/httt/css/mycss.css" rel="stylesheet">
+}
+
+<!-- Demo -->
+<section class="page-section bg-primary" id="demo">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="text-white mt-0">DANH SÁCH SINH VIÊN</h2>
+                <hr class="divider divider-light" />
+            </div>
+        </div>
+    </div>
+</section>
+<section class="page-section">
+    <div class="container px-4 px-lg-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">MSV</th>
+                    <th scope="col">Lớp</th>
+                    <th scope="col">Khoa viện</th>
+                    <th scope="col">CCCD</th>
+                    <th scope="col">Họ và tên</th>
+                    <th scope="col">Tuổi</th>
+                </tr>
+            </thead>
+            <tbody id="dsSinhVien">
+
+            </tbody>
+        </table>
+    </div>
+</section>
+
+@section myjs{
+    <script src="~/httt/js/myjs.js"></script>
+}
