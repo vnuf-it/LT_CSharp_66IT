@@ -1,0 +1,6 @@
+﻿B1: Tải về bộ giao diện https://startbootstrap.com/theme/creative
+B2: Tạo thư mục Resource và giải nén tài nguyên vào đó
+B3: Tạo thư mục httt trong thư mục wwwroot, sau đó sao chép: asset, css, js
+B4: Khởi tạo View _BaseLayout --> thay cho _Layout gốc: Bản chất nó là View Master
+- Copy toàn bộ HTML giao diện từ index vào.
+
