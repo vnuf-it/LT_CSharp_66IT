@@ -129,24 +129,29 @@ namespace Core_WebAPI.Controllers
             // Lưu ý: Nếu các trường thông tin khác để trống --> khi cập nhật sẽ xóa (bỏ trống hoặc chứa giá trị null)
             try
             {
-                // B1: Kiểm tra sự tồn tài của đối tượng theo id
-                if (msv != sv.Msv)
+                if (sv == null)
+                {
+                    throw new ArgumentNullException("item");
+                }
+                int index = ds_sinhvien.FindIndex(p => p.Msv == sv.Msv);
+                if (index == -1)
+                {
                     return BadRequest("Msg: Mã sinh viên không tồn tại");
-
-                var sv_old = StudentController.GetStudentByMsv(msv);
-                var sv_new = sv;
-
-                // B2: Cập nhật các trường thông tin
-                ds_sinhvien.Remove(sv_old);
-                ds_sinhvien.Add(sv_new);
-
-                // B3: Thông báo kết quả
+                }
+                ds_sinhvien.RemoveAt(index);
+                ds_sinhvien.Add(sv);
                 return Ok(ds_sinhvien);
+
             }
             catch (Exception ex)
             {
                 return Content(ex.ToString());
             }
+
+
+
+
+
         }
 
 
@@ -186,7 +191,7 @@ namespace Core_WebAPI.Controllers
                 {
                     ds_sinhvien.Remove(sv_del);
                     return Ok(ds_sinhvien);
-                }         
+                }
                 else
                     return BadRequest("Msg: Mã sinh viên không tồn tại");
             }
@@ -202,7 +207,7 @@ namespace Core_WebAPI.Controllers
         {
             try
             {
-                ds_sinhvien .Clear();
+                ds_sinhvien.Clear();
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception ex)
