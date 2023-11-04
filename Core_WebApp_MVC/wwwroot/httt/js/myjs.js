@@ -1,7 +1,6 @@
 ﻿const url = "http://localhost:5077/api/Student";
 let test;
 
-// Cach 1:
 async function getdata(url) {
     const options = {
         method: 'GET',
@@ -40,34 +39,57 @@ async function adddata(data) {
     show_table(data);
 }
 
+//$(".sv_edit").click(function () {
+//    var $row = $(this).closest("tr");    // Find the row
+//    var $tds = $row.find("td");
+//    $.each($tds, function () {
+//        console.log($(this).text());
+//    });
+//});
 
-// Cach 2:
-//async function getapi(url) {
-//    try {
-//        const response = await fetch(url);
 
-//        if (!response.ok) {
-//            throw new Error(`Error! status: ${response.status}`);
-//            console.log(response.status);
-//        }
+async function viedata(msv) {
+    const options = {
+        method: "GET",
+        body: JSON.stringify(msv)
+    }
+    const response = await fetch(url + "/" + msv, options);
+    var data = await response.json();
+    test = data;
+    console.log(data);
+}
 
-//        const result = await response.json();
-//        return result;
-//    } catch (err) {
-//        console.log(err);
-//    }
-//}
+async function deldata(msv) {
+    const options = {
+        method: "DELETE",
+        body: JSON.stringify(msv)
+    }
+    const response = await fetch(url+"/"+msv, options);
+    var data = await response.json();
+    test = data;
+    console.log(data);
+    $('#addSinhVien').modal('hide');
+    clear_all();
+    show_table(data);
+}
 
-//getapi();
 
+
+var btn_action = `
+    <div>
+        <button type="button" class="btn btn-info btnSelect" onclick = "view_sinhvien()">Xem</button>
+        <button type="button" class="btn btn-info btnSelect" onclick = "edit_sinhvien()">Sửa</button>
+        <button type="button" class="btn btn-danger btnSelect" onclick = "dele_sinhvien()">Xóa</button>
+    </div >`
 function show_table(arrs) {
-    let tb_row = `<tr>
+    let tb_row = `<tr class="text-center font-italic font-weight-light">
         <td>(1)</td>
         <td>(2)</td>
         <td>(3)</td>
         <td>(4)</td>
         <td>(5)</td>
         <td>(6)</td>
+        <td>(7)</td>
         </tr>`;
 
     arrs.forEach(function show(p) {
@@ -77,7 +99,8 @@ function show_table(arrs) {
         <td>${p.khoavien}</td>
         <td>${p.cccd}</td>
         <td>${p.hodem} ${p.ten}</td>
-        <td>${p.tuoi}</td>
+        <td class="text-center">${p.tuoi}</td>
+        <td class="text-center">${btn_action}</td>
         </tr>`;
     });
 
@@ -124,4 +147,18 @@ function save_sinhvien() {
     }
 
     adddata(data);
+}
+
+function dele_sinhvien() {
+    $(".btnSelect").on('click', function () {
+        var currentRow = $(this).closest("tr");
+
+        var col1 = currentRow.find("td:eq(0)").html();
+
+        //var col2 = currentRow.find("td:eq(1)").html();
+        //var data = col1 + "\n" + col2;
+        //alert(data);
+
+        deldata(col1);
+    });
 }
