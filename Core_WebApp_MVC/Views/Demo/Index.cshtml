@@ -20,8 +20,17 @@
 </section>
 <section class="page-section">
     <div class="container px-4 px-lg-5">
-        <button type="button" id="show" class="btn btn-primary" onclick="show_all()">Show</button>
-        <button type="button" id="clear" class="btn btn-danger" onclick="clear_all()">Clear</button>
+        <div class="row">
+            <div class="col-6">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSinhVien">
+                    Thêm mới
+                </button>
+            </div>
+            <div class="col-6">
+                <button type="button" id="show" class="btn btn-primary float-end" onclick="refresh_all()">Làm tươi</button>
+                <button type="button" id="clear" class="btn btn-danger float-end" onclick="clear_all()">Clear</button>
+            </div>
+        </div>
 
         <table class="table">
             <thead>
@@ -35,9 +44,59 @@
                 </tr>
             </thead>
             <tbody id="dsSinhVien">
-
             </tbody>
         </table>
+    </div>
+</section>
+
+<section class="page-section">
+    <div class="container px-4 px-lg-5">
+        <!-- Modal -->
+        <div class="modal fade" id="addSinhVien" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Biểu mẫu thêm mới Sinh viên</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="msv" class="col-form-label">Mã sinh viên:</label>
+                                <input type="text" class="form-control" id="msv">
+                            </div>
+                            <div class="form-group">
+                                <label for="lop" class="col-form-label">Lớp:</label>
+                                <input type="text" class="form-control" id="lop">
+                            </div>
+                            <div class="form-group">
+                                <label for="khoavien" class="col-form-label">Khoa/Viện:</label>
+                                <input type="text" class="form-control" id="khoavien">
+                            </div>
+                            <div class="form-group">
+                                <label for="cccd" class="col-form-label">Căn cước công dân:</label>
+                                <input type="text" class="form-control" id="cccd">
+                            </div>
+                            <div class="form-group">
+                                <label for="hodem" class="col-form-label">Họ đêm:</label>
+                                <input type="text" class="form-control" id="hodem">
+                            </div>
+                            <div class="form-group">
+                                <label for="ten" class="col-form-label">Tên:</label>
+                                <input type="text" class="form-control" id="ten">
+                            </div>
+                            <div class="form-group">
+                                <label for="tuoi" class="col-form-label">Tuổi:</label>
+                                <input type="text" class="form-control" id="tuoi">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-primary" onclick="save_sinhvien()">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
