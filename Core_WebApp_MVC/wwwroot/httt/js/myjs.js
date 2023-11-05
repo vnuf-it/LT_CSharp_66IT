@@ -53,10 +53,11 @@ async function viedata(msv) {
         method: "GET",
         body: JSON.stringify(msv)
     }
-    const response = await fetch(url + "/" + msv, options);
+    const response = await fetch(url + "/" + msv.trim(), options);
     var data = await response.json();
-    test = data;
     console.log(data);
+
+    alert(data.hodem + data.ten);
 }
 
 async function deldata(msv) {
@@ -77,9 +78,9 @@ async function deldata(msv) {
 
 var btn_action = `
     <div>
-        <button type="button" class="btn btn-info btnSelect" onclick = "view_sinhvien()">Xem</button>
-        <button type="button" class="btn btn-info btnSelect" onclick = "edit_sinhvien()">Sửa</button>
-        <button type="button" class="btn btn-danger btnSelect" onclick = "dele_sinhvien()">Xóa</button>
+        <button type="button" class="btn btn-success btnXem" onclick="view_sinhvien()">Xem</button>
+        <button type="button" class="btn btn-info btnSua" onclick="edit_sinhvien()">Sửa</button>
+        <button type="button" class="btn btn-danger btnXoa" data-toggle="modal" onclick="dele_sinhvien()">Xóa</button>
     </div >`
 function show_table(arrs) {
     let tb_row = `<tr class="text-center font-italic font-weight-light">
@@ -149,16 +150,24 @@ function save_sinhvien() {
     adddata(data);
 }
 
-function dele_sinhvien() {
-    $(".btnSelect").on('click', function () {
+function view_sinhvien() {
+    $(".btnXem").on('click', function () {
         var currentRow = $(this).closest("tr");
-
         var col1 = currentRow.find("td:eq(0)").html();
+        viedata(col1);
+    });
+}
 
+function dele_sinhvien() {
+    $(".btnXoa").on('click', function () {
+        var currentRow = $(this).closest("tr");
+        var col1 = currentRow.find("td:eq(0)").html();
         //var col2 = currentRow.find("td:eq(1)").html();
-        //var data = col1 + "\n" + col2;
-        //alert(data);
 
-        deldata(col1);
+        $('#delSinhVien').modal('show');
+        $('#del_sv').on("click", function () {
+            $('#delSinhVien').modal('hide');
+            deldata(col1);
+        });       
     });
 }
